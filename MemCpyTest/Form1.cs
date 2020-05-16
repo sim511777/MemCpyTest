@@ -67,7 +67,10 @@ namespace MemCpyTest {
 
             var methodTuple = lbxMemcpyType.SelectedItem as Tuple<string, MethodInfo>;
             var method = methodTuple.Item2;
-            method.Invoke(null, new object[] { dstBuf, srcBuf, bytes });
+            //method.Invoke(null, new object[] { dstBuf, srcBuf, bytes });
+            var memcpyFunc = (Func<IntPtr, IntPtr, long, IntPtr>)method.CreateDelegate(typeof(Func<IntPtr, IntPtr, long, IntPtr>));
+            memcpyFunc(dstBuf, srcBuf, bytes);
+
             Log($"{method.Name} {bytes / 1024 / 1024}MB Finished - {GetTimeMs()-t0:f3}ms");
         }
     }
