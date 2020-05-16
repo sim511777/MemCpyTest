@@ -10,9 +10,11 @@
 #define NATIVE_API extern "C" __declspec(dllimport)
 #endif
 
-NATIVE_API int fnNative(void);
-NATIVE_API void* C_MemcpySse(void *pdst, void *psrc, size_t nbyte);
-NATIVE_API void* C_Memcpy1(void *pdst, void *psrc, size_t nbyte);
-NATIVE_API void* C_Memcpy4(void *pdst, void *psrc, size_t nbyte);
-NATIVE_API void* C_Memcpy8(void *pdst, void *psrc, size_t nbyte);
+// for C# code compatibility
+typedef unsigned char byte;
+typedef void* IntPtr;
+typedef __int64 Int64;
 
+NATIVE_API IntPtr C_Memcpy1(IntPtr _Dst, IntPtr _Src, Int64 _Size);
+NATIVE_API IntPtr C_Memcpy4(IntPtr _Dst, IntPtr _Src, Int64 _Size);
+NATIVE_API IntPtr C_MemcpySse(IntPtr _Dst, IntPtr _Src, Int64 _Size);
