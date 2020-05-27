@@ -44,6 +44,8 @@ namespace MemCpyTest {
         IntPtr srcBuf = IntPtr.Zero;
         IntPtr dstBuf = IntPtr.Zero;
         long bytes = 0;
+        private double GB => (double)bytes / 1024 / 1024 / 1024;
+
         private void btnAlloc_Click(object sender, EventArgs e) {
             var t0 = GetTimeMs();
 
@@ -59,11 +61,11 @@ namespace MemCpyTest {
             dstBuf = Marshal.AllocHGlobal((IntPtr)bytes);
             Util2.memset(dstBuf, 0, bytes);
             
-            Log($"Alloc {numMegabyte.Value}MB Finished - {GetTimeMs()-t0:f3}ms");
+            Log($"Alloc {GB:f3}GB Finished - {GetTimeMs()-t0:f3}ms");
         }
 
         private void lbxMemcpyType_MouseDoubleClick(object sender, MouseEventArgs e) {
-            var t0 = GetTimeMs();
+            var t0 = GetTime();
 
             var methodTuple = lbxMemcpyType.SelectedItem as Tuple<string, MethodInfo>;
             var method = methodTuple.Item2;
@@ -71,7 +73,18 @@ namespace MemCpyTest {
             var memcpyFunc = (Func<IntPtr, IntPtr, long, IntPtr>)method.CreateDelegate(typeof(Func<IntPtr, IntPtr, long, IntPtr>));
             memcpyFunc(dstBuf, srcBuf, bytes);
 
-            Log($"{method.Name} {bytes / 1024 / 1024}MB Finished - {GetTimeMs()-t0:f3}ms");
+            var dt = GetTime() - t0;
+            var ms = dt * 1000;
+            var GBPS = GB / dt;
+            Log($"memcpy {GB:f3}GB {method.Name,-20} : {ms:f3}ms - {GBPS:f1}GBPS");
+        }
+
+        private void btnMemetRandom_Click(object sender, EventArgs e) {
+            Random rnd = new Random();
+            int val = rnd.Next(0, 255);
+            var t0 = GetTimeMs();
+            Util2.memset(srcBuf, val, bytes);
+            Log($"memset with ({val}) {GB:f3}GB  : {GetTimeMs()-t0:f3}ms");
         }
     }
 }

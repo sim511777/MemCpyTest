@@ -29,6 +29,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.lbxMemcpyType = new System.Windows.Forms.ListBox();
+            this.btnMemetRandom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numMegabyte)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,11 +105,22 @@
             this.lbxMemcpyType.ValueMember = "Item2";
             this.lbxMemcpyType.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbxMemcpyType_MouseDoubleClick);
             // 
+            // btnMemetRandom
+            // 
+            this.btnMemetRandom.Location = new System.Drawing.Point(232, 12);
+            this.btnMemetRandom.Name = "btnMemetRandom";
+            this.btnMemetRandom.Size = new System.Drawing.Size(115, 23);
+            this.btnMemetRandom.TabIndex = 9;
+            this.btnMemetRandom.Text = "memset random";
+            this.btnMemetRandom.UseVisualStyleBackColor = true;
+            this.btnMemetRandom.Click += new System.EventHandler(this.btnMemetRandom_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 599);
+            this.Controls.Add(this.btnMemetRandom);
             this.Controls.Add(this.lbxMemcpyType);
             this.Controls.Add(this.btnClearLog);
             this.Controls.Add(this.label1);
@@ -131,6 +143,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnClearLog;
         private System.Windows.Forms.ListBox lbxMemcpyType;
+        private System.Windows.Forms.Button btnMemetRandom;
     }
 }
 
