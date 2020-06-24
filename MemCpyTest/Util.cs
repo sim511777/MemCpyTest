@@ -45,6 +45,23 @@ namespace MemCpyTest {
             return _Dst;
         }
 
+        public static unsafe IntPtr UnsafeMemcpy8(IntPtr _Dst, IntPtr _Src, Int64 _Size) {
+            Int64 size8 = _Size / 8;
+            Int64 size1 = _Size % 8;
+            
+            long* pdst8 = (long*)_Dst;
+            long* psrc8 = (long*)_Src;
+            while (size8-- > 0)
+                *pdst8++ = *psrc8++;
+
+            byte* pdst1 = (byte*)pdst8;
+            byte* psrc1 = (byte*)psrc8;
+            while (size1-- > 0)
+                *pdst1++ = *psrc1++;
+
+            return _Dst;
+        }
+
         public static unsafe IntPtr Unsafe_CopyBlock(IntPtr _Dst, IntPtr _Src, Int64 _Size) {
             Unsafe.CopyBlock((void*)_Dst, (void*)_Src, (uint)_Size);
             return _Dst;
